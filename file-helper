@@ -1,0 +1,54 @@
+# Небольшая библиотека для работы с файлами
+
+def read_file(filepath):
+    """
+    Читает содержимое файла и возвращает его как строку.
+    """
+    try:
+        with open(filepath, 'r', encoding='utf-8') as file:
+            return file.read()
+    except FileNotFoundError:
+        return "Файл не найден."
+
+
+def write_file(filepath, content):
+    """
+    Записывает содержимое в файл. Если файл существует, перезаписывает его.
+    """
+    with open(filepath, 'w', encoding='utf-8') as file:
+        file.write(content)
+        return "Файл успешно записан."
+
+
+def find_in_file(filepath, keyword):
+    """
+    Ищет ключевое слово в файле и возвращает строки, где оно встречается.
+    """
+    try:
+        with open(filepath, 'r', encoding='utf-8') as file:
+            lines = file.readlines()
+            result = [line for line in lines if keyword in line]
+            return result if result else "Ключевое слово не найдено."
+    except FileNotFoundError:
+        return "Файл не найден."
+
+
+def remove_duplicates(filepath):
+    """
+    Удаляет дублирующиеся строки из файла.
+    """
+    try:
+        with open(filepath, 'r', encoding='utf-8') as file:
+            lines = file.readlines()
+        unique_lines = list(dict.fromkeys(lines))
+        with open(filepath, 'w', encoding='utf-8') as file:
+            file.writelines(unique_lines)
+        return "Дубликаты удалены."
+    except FileNotFoundError:
+        return "Файл не найден."
+
+# Пример использования:
+# print(read_file('example.txt'))
+# print(write_file('example.txt', 'Hello, World!'))
+# print(find_in_file('example.txt', 'World'))
+# print(remove_duplicates('example.txt'))
